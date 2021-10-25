@@ -28,7 +28,7 @@ SSD1306             display(0x3c, D2 /*RX*/, D1 /*TX*/, GEOMETRY_128_32);
 
 void saveTheConfig()
 {
-    DynamicJsonDocument json(2048);
+    DynamicJsonDocument json(4096);
     json["bright"] = gBrightness;
     json["mode"]   = gCurrentMode;
 
@@ -54,6 +54,11 @@ void loadTheConfig()
             if(doc["modes"].containsKey(key)){
                 gModeConfigs[i].scale = doc["modes"][key]["scale"];
                 gModeConfigs[i].speed = doc["modes"][key]["speed"];
+
+                if(!gModeConfigs[i].scale)
+                    gModeConfigs[i].scale = 30;
+                if(!gModeConfigs[i].speed)
+                    gModeConfigs[i].speed = 30;
             }
         }
 

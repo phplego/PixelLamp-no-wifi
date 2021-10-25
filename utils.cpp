@@ -71,7 +71,7 @@ bool loadConfig(const char * filename, std::function<void(DynamicJsonDocument)> 
     if(text == "") 
         return false;
 
-    const int JSON_SIZE = 2048;
+    const int JSON_SIZE = 4096;
 
     DynamicJsonDocument json(JSON_SIZE);
     DeserializationError error = deserializeJson(json, text);
@@ -97,7 +97,9 @@ bool saveConfig(const char * filename, DynamicJsonDocument json)
         if (!configFile) {
             Serial.println("Failed to open config file for writing.");
         } else {
-            serializeJson(json, configFile);
+            String str;
+            serializeJson(json, str);
+            configFile.write(str.c_str());
             configFile.close();
             success = true;
         }

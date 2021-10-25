@@ -58,10 +58,11 @@ void fillAll(CRGB color) {
 
 // получить номер пикселя в ленте по координатам
 uint16_t getPixelIndex(int8_t x, int8_t y) {
-    if ((THIS_Y % 2 == 0) || MATRIX_TYPE) {               // если чётная строка
-        return (THIS_Y * _WIDTH + THIS_X);
+    y = 15 - y; // flip vertically
+    if ((y % 2 == 0) || MATRIX_TYPE == 1) {               // если чётная строка
+        return (y * WIDTH + x);
     } else {                                              // если нечётная строка
-        return (THIS_Y * _WIDTH + _WIDTH - THIS_X - 1);
+        return (y * WIDTH + WIDTH - x - 1);
     }
 }
 
